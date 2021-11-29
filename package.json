@@ -1,10 +1,13 @@
 {
   "name": "dev",
   "version": "1.0.0",
+  "engines": {
+    "node": "14.17.6"
+  },
   "main": "restaurant.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon -e js,ejs"
+    "start": "node restaurant.js"
   },
   "keywords": [],
   "author": "",

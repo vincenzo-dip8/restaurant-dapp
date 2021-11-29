@@ -28,7 +28,6 @@ const {
 
 const app = express();
 const port = process.env.PORT || 8080;
-//const portRange = [8000, 8001, 8002, 8003, 8004, 8005, 8006, 8007, 8008, 8009];
 const localAddress = "http://localhost:";
 const home = localAddress + `${port}/`;
 //const addressAPI = localAddress + `${port}/api`;
@@ -53,32 +52,20 @@ const adminToken = {
 };
 
 const CEOToken = {
-  "refreshToken" : "cb99e14826ee711b6ad0dee8b4776d57",
-  "clientId"     : "7c9aa11108b4dc9281d83035cb2d6c92",
-  "clientSecret" : "d2d68db87b5fbc04935f7cfd0f4742dc",
+  "refreshToken" : "45af8cf3f37a60bd966a4e41dcf7f564",
+  "clientId"     : "a26020edadac1a10380492ece2e66556",
+  "clientSecret" : "bdd6ebb4dcee2dd537ce0f156ca03215",
   provider : "https://solidcommunity.net"
 };
 
 const restaurantToken = {
-  "refreshToken" : "6805d063be8d4f38e52ffc8a0b954a4d",
-  "clientId"     : "83a3d728f1d61aad02cc94045f7ea166",
-  "clientSecret" : "2d691a2462b69c2f8daffa7d9cb0667f",
+  "refreshToken" : "7290318860c5fbbc80d70f033477760a",
+  "clientId"     : "3c5b82e97c089517611a5f35358a892c",
+  "clientSecret" : "4980c1e5ba25996814841de92b2941dd",
   provider : "https://solidcommunity.net"
 };
 
-const authorityToken = {
-  "refreshToken" : "NIDYLFm8vTYPOQMddKhCAVHV0yJ5SWb1",
-  "clientId"     : "FSC887toOUwiv0lxtKNgd5ZwItQ1lLKh",
-  "clientSecret" : "PWnlQyaEmF9CpHc9D7LUVAUACSlrmJtJ",
-  provider : "https://broker.pod.inrupt.com"
-};
-
-const erpToken = {
-  "refreshToken" : "NIDYLFm8vTYPOQMddKhCAVHV0yJ5SWb1",
-  "clientId"     : "FSC887toOUwiv0lxtKNgd5ZwItQ1lLKh",
-  "clientSecret" : "PWnlQyaEmF9CpHc9D7LUVAUACSlrmJtJ",
-  provider : "https://broker.pod.inrupt.com"
-};
+const authorityToken , erpToken ;
 
 //-----------## Initialization Solid Pod(s) - (re)start the service as predifined
 program
@@ -101,7 +88,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 if(process.env.NODE_ENV === "production"){
-  app.use("", express.static(""))
+  app.use("/", express.static(path.join(__dirname, 'static')))
+
+  app.get("*", (req, res)=>{
+    res.sendFile(path.join(__dirname, 'static'))
+  })
 }
 else{
 
@@ -142,7 +133,7 @@ let sessionRWA;
 
 for(let i = 0; i<rangeTables; i++){
 
-  //var qrCodeText = home + `${i+1}`;   //when heroku,.. update the URL
+  var qrCodeText = `https://rwa-test-heroku.herokuapp.com/${i+1}`;
 
   qr.toFile(`./utils/img/QR-tables/qr-table${i+1}.png`, qrCodeText, {
     errorCorrectionLevel: 'H',
