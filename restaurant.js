@@ -17,10 +17,6 @@ const {
 } = require("./src/client-functions");
 // const os = require("os");
 // const cluster = require("cluster");
-//const { readFile, writeFile } = require('fs/promises');
-//const cookieSession = require("cookie-session");
-//const cookieParser = require('cookie-parser');
-//const axios = require("axios");
 
 //const clusterWorkerSize = os.cpus().length;
 //const clusterWorkerSize = 4;
@@ -65,8 +61,8 @@ const restaurantToken = {
   provider : "https://solidcommunity.net"
 };
 
-const authorityToken = "";
-const erpToken = "";
+const authorityToken = {};
+const erpToken = {};
 
 //-----------## Initialization Solid Pod(s) - (re)start the service as predifined
 program
@@ -87,42 +83,6 @@ app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, 'static')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-// if(process.env.NODE_ENV === "production"){
-//   app.use("/", express.static(path.join(__dirname, 'static')))
-
-//   app.get("*", (req, res)=>{
-//     res.sendFile(path.join(__dirname, 'static'))
-//   })
-// }
-// else{
-
-// }
-
-
-/*
-app.use(function (req, res, next) {
-  next();
-})
-app.use(session({
-  secret: "thisismysecrctekeyfhrgfgrfrty84fwir767",
-  saveUninitialized:true,
-  cookie: { maxAge: 1 * 1000 * 60 * 60 * 24 },  //oneDay
-  resave: false 
-}));
-app.use(cookieParser());
-app.use(
-  cookieSession({
-    name: "session",
-    // These keys are required by cookie-session to sign the cookies.
-    keys: [
-      "Required, but value not relevant for this demo - key1",
-      "Required, but value not relevant for this demo - key2",
-    ],
-    maxAge: 3 * 24 * 60 * 60 * 1000, // 3*24 hours
-  })
-);
-*/
 
 
 const rangeTables = 4;
