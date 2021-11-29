@@ -65,7 +65,8 @@ const restaurantToken = {
   provider : "https://solidcommunity.net"
 };
 
-const authorityToken , erpToken ;
+const authorityToken ;
+const erpToken ;
 
 //-----------## Initialization Solid Pod(s) - (re)start the service as predifined
 program
