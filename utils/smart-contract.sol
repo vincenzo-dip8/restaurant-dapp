@@ -2,9 +2,9 @@
 pragma solidity >=0.4.0 <0.9.0;
 
 contract RestaurantContract{
-    address payable _owner;
-    address payable public _owner ="0x684F22798FEf8dDcaCB8278447703787293cEe07";   //to specify
+    address payable _owner; //"0x684F22798FEf8dDcaCB8278447703787293cEe07"
     mapping(bytes32 => bytes32) hashTable;
+    uint balance;
 
     constructor() {
         _owner = msg.sender;
@@ -63,7 +63,10 @@ contract RestaurantContract{
         _;
     }
 
-    function putData(string memory _orderHash, string memory _hashTransaction) public{
+    function putData(uint amount, string memory _orderHash, string memory _hashTransaction) public{
+        //check the amount and the msg.value
+        require(msg.value == _amount);
+        _owner
         hashTable[_orderHash]= _hashTransaction ;
     }
 
@@ -71,21 +74,8 @@ contract RestaurantContract{
         return(hashTable[_orderHash]) ;
     }
 
-}
+    function withdraw() payable onlyOwner {
+        msg.sender.transfer(address(this).balance);
+    }
 
-
-
-contract Inoltro {
- address payable owner;
- constructor() {
-  owner = msg.sender;
- }
- function forwardPayment(address payable recipient) payable {
-  uint amount = msg.value;
-  recipient.transfer(amount);
- }
- function payOwner() payable {
-  uint amount = msg.value;
-  owner.transfer(amount); 
- }
 }

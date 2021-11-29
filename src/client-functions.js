@@ -78,11 +78,6 @@ function sleep(ms) {
 
 async function login(sessionID, token){    
     const session = await logging(sessionID, token);
-    //removable
-    if (session == undefined){
-        session = await getSession(sessionID);
-        console.log("Session retrieved is : ", session.info.isLoggedIn);
-    }
     return session;
 }
 
@@ -166,15 +161,7 @@ async function takeBill(table, session) {     //(orderID, session)
     makePreBillPDF(bill);
     await uploadFileFromPath(`./utils/temp.pdf`, "application/pdf", obj.billToPayURL, bill.order.hash + ".pdf", session);
     await createResourceSpecificPublicRulesPolicies(obj.billToPayURL+`${bill.order.hash}.pdf`, "billToPay", { read:true }, session);
-    //delete the temp file
-    fs.unlinkSync(`./utils/temp.pdf`, (err) => {
-        if (err) {
-          throw err;
-        }
-        console.log("Temp File is deleted.");
-    });
 
-    // return JSON.parse(bill);
     return bill;
 }
 
@@ -208,12 +195,13 @@ async function getPayment(bill, session) {
 
     await qr.toFile(`./utils/img/QR-tables/temp.png`, qrCodeText, {
         errorCorrectionLevel: 'H',
+        // version: "",
         type: 'image/png',
         quality: 0.95,
-        margin: 1,
+        margin: 3,
         color: {
-            dark: '#208698',
-            light: '#FFF',
+         dark: '#000000ff',
+         light: '#ffffffff',
         },
     });   
 
@@ -222,13 +210,6 @@ async function getPayment(bill, session) {
     deleteFileFromPod(obj.billToPayURL + `${bill.order.hash}.pdf`, session);
     await uploadFileFromPath(`./utils/temp.pdf`, "application/pdf", obj.billPayedURL, bill.order.hash + ".pdf", session);
     await createResourceSpecificPublicRulesPolicies(obj.billPayedURL +`${bill.order.hash}.pdf`, "billPayed", { read:true }, session);
-    //delete the temp file
-    fs.unlinkSync(`./utils/temp.pdf`, (err) => {
-        if (err) {
-          throw err;
-        }
-        console.log("Temp File is deleted.");
-    });
 
     return [true, bill.src];      
 }
@@ -304,9 +285,7 @@ function makePreBillPDF(bill){
         .fontSize(11.5)
         .text("Order Id : ", { align: 'left', continued:true })
         .text(bill.order.id_order, {oblique : true});
-    // pdfDoc
-    //     .text("Bill Hash : ", { align: 'left', continued:true })
-    //     .text(bill["hash_bill"], {oblique : true });
+
     pdfDoc.moveDown(1);
 
     pdfDoc
@@ -432,34 +411,21 @@ function makeBillPDF(bill){
         .text(`Blockchain Type : ${bill["blockchain_type"]}`, { align: 'right' })
         //.text(bill["blockchain_type"], { oblique : true})
 
-        .text(`Restaurant Wallet : ${bill["restaurantWallet"]}`, { align: 'right' });
+        .text(`Restaurant Wallet : ${bill["restaurantWallet"]}`, { align: 'right' })
         //.text(bill["restaurantWallet"], { oblique : true})
 
-        // .text(`Client Wallet : ${bill["clientWallet"]}`, { align: 'right' })
+        .text(`Client Wallet : ${bill["clientWallet"]}`, { align: 'right' })
         //.text(bill["clientWallet"], { oblique : true})
 
-        // .text(`BlockID : ${bill["blockchain_block_id"]}`, { align: 'right' })
-        //.text(bill["blockchain_block_id"], { oblique : true})
-
-        // .text(`TransactionID : ${bill["blockchain_transaction_id"]}`, { align: 'right' });
+        .text(`TransactionID : ${bill["blockchain_transaction_id"]}`, { align: 'right' });
         //.text(bill["blockchain_transaction_id"], { oblique : true});
     pdfDoc.moveDown(3);
 
     //insert the QR Code within the PDF
-    //HERE---->
     // Fit the image in the dimensions, and center it both horizontally and vertically
     pdfDoc.image(`./utils/img/QR-tables/temp.png`, {align: 'center', valign: 'center'});
 
     pdfDoc.end();
-
-    //delete the temp file
-    fs.unlinkSync(`./utils/img/QR-tables/temp.png`, (err) => {
-        if (err) {
-            throw err;
-        }
-        console.log("Temp File is deleted.");
-    });
-
 }
 
 async function updateStore(json, session) {
@@ -565,7 +531,6 @@ async function createActiveOrderSection(session) {
     
     await uploadFileFromPath(obj.activeOrderFilePath, "application/json", obj.activeOrderContainerURL, "order-temp.json", session);
     await createResourceSpecificPublicRulesPolicies(obj.activeOrderFileURL, "activeOrder", { read:true }, session);
-    //await createResourceSpecificRulesPolicies(obj.activeOrderFileURL, "activeOrder", { read:true }, obj.restaurantWebID, session);    
     //set access for authority as: FALSE
 
     await deleteFileFromPod(obj.activeOrderContainerURL + "order-table-1.json", session);
