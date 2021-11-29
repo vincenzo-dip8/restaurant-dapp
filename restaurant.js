@@ -88,16 +88,16 @@ app.use(express.static(path.join(__dirname, 'static')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-if(process.env.NODE_ENV === "production"){
-  app.use("/", express.static(path.join(__dirname, 'static')))
+// if(process.env.NODE_ENV === "production"){
+//   app.use("/", express.static(path.join(__dirname, 'static')))
 
-  app.get("*", (req, res)=>{
-    res.sendFile(path.join(__dirname, 'static'))
-  })
-}
-else{
+//   app.get("*", (req, res)=>{
+//     res.sendFile(path.join(__dirname, 'static'))
+//   })
+// }
+// else{
 
-}
+// }
 
 
 /*
