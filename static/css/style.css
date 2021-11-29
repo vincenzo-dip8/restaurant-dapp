@@ -1,0 +1,531 @@
+@import url('https://fonts.googleapis.com/css2?family=Zen+Antique&display=swap');
+
+
+#menuProduct{
+   margin:100px;
+   position: relative;
+}
+
+#menuImg{
+   height:"250px"; 
+   width:"250px";
+}
+
+.fa-plus{
+   color: green;
+   margin: 5px;
+}
+
+.fa-minus{
+   color: red !important;
+   margin: 5px;
+}
+
+.fa-trash{
+   color: red;
+}
+
+:root {
+   --bs-blue: #0d6efd;
+   --bs-indigo: #6610f2;
+   --bs-purple: #7464a1;
+   --bs-pink: #d63384;
+   --bs-red: #a16468;
+   --bs-orange: #fd7e14;
+   --bs-yellow: #e4c662;
+   --bs-green: #67c29c;
+   --bs-teal: #64a19d;
+   --bs-cyan: #1cabc4;
+   --bs-white: #fff;
+   --bs-gray: #6c757d;
+   --bs-gray-dark: #343a40;
+   --bs-gray-100: #f8f9fa;
+   --bs-gray-200: #e9ecef;
+   --bs-gray-300: #dee2e6;
+   --bs-gray-400: #ced4da;
+   --bs-gray-500: #adb5bd;
+   --bs-gray-600: #6c757d;
+   --bs-gray-700: #495057;
+   --bs-gray-800: #343a40;
+   --bs-gray-900: #212529;
+   --bs-primary: #64a19d;
+   --bs-secondary: #7464a1;
+   --bs-success: #67c29c;
+   --bs-info: #1cabc4;
+   --bs-warning: #e4c662;
+   --bs-danger: #a16468;
+   --bs-light: #f8f9fa;
+   --bs-dark: #212529;
+   --bs-black: #000;
+   --bs-white: #fff;
+   --bs-primary-rgb: 100, 161, 157;
+   --bs-secondary-rgb: 116, 100, 161;
+   --bs-success-rgb: 103, 194, 156;
+   --bs-info-rgb: 28, 171, 196;
+   --bs-warning-rgb: 228, 198, 98;
+   --bs-danger-rgb: 161, 100, 104;
+   --bs-light-rgb: 248, 249, 250;
+   --bs-dark-rgb: 33, 37, 41;
+   --bs-black-rgb: 0, 0, 0;
+   --bs-white-rgb: 255, 255, 255;
+   --bs-white-rgb: 255, 255, 255;
+   --bs-black-rgb: 0, 0, 0;
+   --bs-body-color-rgb: 33, 37, 41;
+   --bs-body-bg-rgb: 255, 255, 255;
+   --bs-font-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+   --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+   --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
+   --bs-body-font-family: Nunito, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+   --bs-body-font-size: 1rem;
+   --bs-body-font-weight: 400;
+   --bs-body-line-height: 1.5;
+   --bs-body-color: #212529;
+   --bs-body-bg: orange;
+ }
+ 
+ 
+ #nameProductBox{
+     height: 10%; 
+     text-indent: 20;
+ }
+ 
+ #tableNumberFixedBar {
+    padding-top: 9px;
+    height: 45px;
+    width: 100%;
+    box-shadow: 0px 2px 4px grey;
+    display:flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+#tableNumberFixedBar div h4{
+    text-align: left;
+    margin-right: 180;
+}
+
+#tableNumberFixedBar div h5{
+    text-align: right;
+    margin-top: 7px;
+}
+ 
+ #productTitle{
+     text-indent: 10;
+     padding-top: 10px;
+     height: 35px;
+ }
+ 
+ #productImage{
+     padding-right: 5px;
+ }
+ 
+ #cartImage{
+     margin-left: 10px;
+     width: 130px;
+     height: 125px;
+     margin-right: 10px;
+ }
+ 
+ #menuSwitch{
+     border-right: 1px solid grey;
+     padding-top: px;
+ }
+ 
+ #trashEdge{
+     padding-right: 10px;
+     padding-top: 2px;
+     font-size: 25;
+ }
+ 
+ #Pizza-price, #coversPrice{
+     margin-top: 5px; 
+ }
+ 
+ #productButtons{
+     display:flex;
+     flex-direction: row;
+     justify-content: space-around;
+ }
+ 
+ #chooseButtons{
+     display:flex;
+     flex-direction: row;
+     justify-content: space-around;
+ }
+ 
+ .title{
+     padding: 3px 0px 8px;
+     font-size: 32px;
+     font-family: cursive;
+     text-shadow: 1px 1px 0px orange;
+     text-align: center;
+     box-shadow: 0px 4px 5px grey;
+     background-color: var(--bs-body-bg);
+ }
+ 
+ .fixed-top-bar{
+     text-align: left;
+     padding-top: 5;
+ }
+ 
+ /* The sticky class is added to the header with JS when it reaches its scroll position */
+ .sticky {
+   position: fixed;
+   top: 0;
+ }
+ 
+ .sticky + .content {
+   padding-top: 102px;
+ }
+ 
+ .content{
+     margin-top: 3px;
+     padding-bottom: 70px;
+     padding-top: 80px;
+     height: 100%;
+     display: grid;
+     overflow: scroll;
+     background-color: aliceblue;
+ }
+ 
+ .product{
+     border:1px solid grey;
+     background-color: white;
+     padding-bottom: 35px;
+     width: 60%;
+     height: 350px;
+     border-radius: 20px;
+     margin: 8px auto;
+     margin-bottom: 40px;
+     box-shadow: 4px 4px 5px 3px grey;
+ }
+ 
+ .product img{
+     padding-top: 4px;
+     padding-left: 5px;
+     padding-right: 5px;
+     width: 95%;
+     height: 50%;
+     margin: 10px 0px 15px 10px;
+ }
+ .hidden{
+     display:none;
+ }
+ 
+ #cart{
+    display: none;
+ }
+ 
+ #menu{
+    display: block;
+ }
+ 
+ .cartItems{
+     background-color: white;
+     padding: 15px 10px;
+     width: 75%;
+     height: 150px;
+     border-radius: 20px;
+     margin: 15px auto;
+     box-shadow: 4px 4px 5px 3px grey;
+     display:flex;
+     flex-direction: row;
+     margin-bottom: 30px;
+ }
+ 
+ .fixed-bottom-bar {
+     display:flex;
+     flex-direction: row;
+     justify-content: space-around;
+     box-shadow: 0px -2px 3px 1px grey;
+     border-top-left-radius: 180px 50px;
+     border-top-right-radius: 180px 50px;
+     background-color: antiquewhite;
+ }
+ 
+ .fixed-bottom-bar .container, .container{
+     width:50%;
+ }
+ 
+ a{
+     color: black;
+     text-decoration: none;
+ }
+ 
+ .fixed-bottom-bar .container a .button{
+     font-size:25px;
+     padding:15px 15px;
+ }
+ 
+ 
+ #footer{
+     font-size: 12px;
+     text-decoration-color: red;
+     text-align: center;
+     bottom: 0;
+ }
+ 
+ .quantity{
+     display:flex;
+     flex-direction: row;
+     justify-content: space-around;
+ }
+ 
+ html {
+
+ }
+ ::-webkit-scrollbar {
+     width: 0px;
+     background: transparent; /* make scrollbar transparent */
+ }
+ 
+ .buttonMarks{
+     height: 65px;
+     text-align: center;
+     padding-top: 15px;
+     width: 100%;    
+ }
+ 
+ .productButtons{
+     width: 100%;
+     padding: 7 20 ;
+ } 
+
+ #button{
+     display: none;
+     margin-top: 40px;
+     background-color: transparent;
+ }
+
+ #buttonContext{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-around;
+    background-color: transparent;
+ }
+
+
+ /* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Modal Header */
+.modal-header {
+    padding: 2px 16px;
+    background-color: #5cb85c;
+    color: white;
+}
+
+/* Modal Body */
+.modal-body {padding: 2px 16px;}
+
+/* Modal Footer */
+.modal-footer {
+    padding: 2px 16px;
+    background-color: #5cb85c;
+    color: white;
+}
+
+/* Modal Content */
+.modal-content {
+    position: relative;
+    background-color: #fefefe;
+    margin: auto;
+    padding: 0;
+    border: 1px solid #888;
+    width: 80%;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    -webkit-animation-name: animatetop;
+    -webkit-animation-duration: 0.4s;
+    animation-name: animatetop;
+    animation-duration: 0.4s
+}
+
+/* Add Animation */
+@-webkit-keyframes animatetop {
+    from {top: -300px; opacity: 0}
+    to {top: 0; opacity: 1}
+}
+
+@keyframes animatetop {
+    from {top: -300px; opacity: 0}
+    to {top: 0; opacity: 1}
+}
+
+#pdfShow{
+    margin-left: 10px;
+    margin-top: 5px;
+    width: 95%;
+    height: 70%;
+    scrollbar-width: 0px;
+}
+
+.lds-roller {
+    display: inline-block;
+    position: relative;
+    width: 80px;
+    height: 80px;
+    color: #000;
+  }
+  .lds-roller div {
+    animation: lds-roller 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    transform-origin: 40px 40px;
+  }
+  .lds-roller div:after {
+    content: " ";
+    display: block;
+    position: absolute;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #fff;
+    margin: -4px 0 0 -4px;
+  }
+  .lds-roller div:nth-child(1) {
+    animation-delay: -0.036s;
+  }
+  .lds-roller div:nth-child(1):after {
+    top: 63px;
+    left: 63px;
+  }
+  .lds-roller div:nth-child(2) {
+    animation-delay: -0.072s;
+  }
+  .lds-roller div:nth-child(2):after {
+    top: 68px;
+    left: 56px;
+  }
+  .lds-roller div:nth-child(3) {
+    animation-delay: -0.108s;
+  }
+  .lds-roller div:nth-child(3):after {
+    top: 71px;
+    left: 48px;
+  }
+  .lds-roller div:nth-child(4) {
+    animation-delay: -0.144s;
+  }
+  .lds-roller div:nth-child(4):after {
+    top: 72px;
+    left: 40px;
+  }
+  .lds-roller div:nth-child(5) {
+    animation-delay: -0.18s;
+  }
+  .lds-roller div:nth-child(5):after {
+    top: 71px;
+    left: 32px;
+  }
+  .lds-roller div:nth-child(6) {
+    animation-delay: -0.216s;
+  }
+  .lds-roller div:nth-child(6):after {
+    top: 68px;
+    left: 24px;
+  }
+  .lds-roller div:nth-child(7) {
+    animation-delay: -0.252s;
+  }
+  .lds-roller div:nth-child(7):after {
+    top: 63px;
+    left: 17px;
+  }
+  .lds-roller div:nth-child(8) {
+    animation-delay: -0.288s;
+  }
+  .lds-roller div:nth-child(8):after {
+    top: 56px;
+    left: 12px;
+  }
+@keyframes lds-roller {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+#charging{
+  display: "none";
+}
+
+.loader {
+  animation:spin 1s infinite linear;
+  border:solid 2vmin transparent;
+  border-radius:50%;
+  border-right-color:#09f;
+  border-top-color:#09f;
+  box-sizing:border-box;
+  height:20vmin;
+  left:calc(50% - 10vmin);
+  top:calc(50% - 10vmin);
+  width:20vmin;
+  z-index:1;
+  &:before {
+    animation:spin 2s infinite linear;
+    border:solid 2vmin transparent;
+    border-radius:50%;
+    border-right-color:#3cf;
+    border-top-color:#3cf;
+    box-sizing:border-box;
+    content:"";
+    height:16vmin;
+    left:0;
+    top:0;
+    width:16vmin;
+  }
+  &:after {
+    animation:spin 3s infinite linear;
+    border:solid 2vmin transparent;
+    border-radius:50%;
+    border-right-color:#6ff;
+    border-top-color:#6ff;
+    box-sizing:border-box;
+    content:"";
+    height:12vmin;
+    left:2vmin;
+    top:2vmin;
+    width:12vmin;
+  }
+}
+
+@keyframes spin {
+  100% {
+    transform:rotate(360deg);
+  }
+}

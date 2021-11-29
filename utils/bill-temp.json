@@ -1,0 +1,16 @@
+{
+  "id_bill" : "bill-",
+  "src" : "",
+  "name_activity" : "Restaurant",
+  "group" : "Shaker-Maker Group",
+  "activity_address" : "Via la Santa, 4, Lugano 6900",
+  "phone" : "+41-22-767-6111",
+  "p_iva" : "119090779334480965",
+  "hash_bill": "during pay",
+  "order" : "to insert",
+  "payed": false,
+  "pay_mode" : "blockchain transaction",
+  "restaurantWallet": "0x684F22798FEf8dDcaCB8278447703787293cEe07",
+  "blockchain_type": "Ethereum 2.0",
+  "blockchain_transaction_id": "after payed"
+}

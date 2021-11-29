@@ -1,0 +1,11 @@
+{
+  "id_order" : "orderID",
+  "table_number" : "tableNumber",
+  "covers" : 1,
+  "time" : "result", 
+  "products" : [
+      
+  ],
+  "total": 0,
+  "hash": ""
+}

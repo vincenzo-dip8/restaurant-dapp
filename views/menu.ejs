@@ -1,0 +1,459 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Restaurant Web-App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
+        integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>  
+    <link rel="stylesheet" href="/css/style.css" />
+</head>
+
+<body>
+    <div class="title">
+        RESTAURANT
+    </div>
+
+    <div class="fixed-top-bar">
+        <div id="tableNumberFixedBar">
+            <div id="">
+                <h4>Table #<%= tableNumber %></h4>
+            </div>
+            <div id="">
+                <h5 id="subTotal">SubTot: <%= order.total %></h5>
+            </div>
+        </div>
+    </div>
+
+    <div class="content" id="menu">
+        <% menu.products.forEach(function(element) { %>           
+            <% if (element.quantity_available> 0) { %>
+                <div class="product">
+                    <div id="productTitle">
+                        <h3>
+                            <%= element.name %>
+                        </h3>
+                    </div>
+                    <div id="productImage"><img class="rounded" src="<%= element.image %>" alt=""></div>
+                    <div class="quantity">
+                        <h5>Quantity</h5>
+                        <span>
+                            <select id="mySelect<%= element.name.split(' ').join('') %>" class="form-select-sm h-75" style="height: 30px; width: 50px; border-radius: 60px"
+                                aria-label="Default select example" onchange="updatePrice('<%= element.name.split(' ').join('') %>', '<%= element.cost_per_unit %>');">
+                                <% for (let i=1; i <=element.quantity_available*0.25; i++ ) { %>                                
+                                    <% if (i==1) {%>
+                                        <option selected value="<%= i%>"><%= i%></option>
+                                    <%} else {%>
+                                        <option value="<%= i%>"><%= i%></option>
+                                    <%}%>
+                                <% }%>
+                            </select>
+                        </span>
+                    </div>
+                    <div class="quantity">
+                        <span>
+                            <h5>Price : </h5>
+                        </span>
+                        <span>
+                            <p id="price<%= element.name.split(' ').join('') %>"><i>
+                                    <%= element.cost_per_unit %>
+                                </i> CHF</p>
+                        </span>
+                    </div>
+
+                    <div id="productButtons">
+                        <span>
+                            <!-- Button trigger modal -->
+                            <button class="productButtons btn btn-sm btn-primary" id="exampleModalButton<%= element.name.split(' ').join('') %>">
+                                Description
+                            </button>
+                            
+                            <!-- Modal -->
+                            <div class="modal" id="exampleModal<%= element.name.split(' ').join('') %>">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel<%= element.name.split(' ').join('') %>">
+                                                <%= element.name %>
+                                            </h5>
+                                            <button class="close" id="close-tag-<%= element.name.split(' ').join('') %>" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <img id="menuImgToggle<%= element.name.split(' ').join('') %>" src="<%= element.image %>" class="img-fluid" />
+                                            <p>
+                                                <%= element.description %>
+                                            </p>
+                                        </div>
+                                        <div class="modal-footer">
+                                        </div>
+                                    </div>
+                            </div>
+                        </span>
+                        <span><button class="productButtons btn btn-sm" id="order<%= element.name.split(' ').join('') %>" onclick="addToCart('<%= JSON.stringify(element) %>');">Order</button></span>
+
+                    </div>
+                </div>
+                <script>
+                    // Get the modal
+                    var modal<%= element.name.split(' ').join('') %> = document.getElementById('exampleModal<%= element.name.split(' ').join('') %>');
+
+                    // Get the button that opens the modal
+                    var btn<%= element.name.split(' ').join('') %> = document.getElementById("exampleModalButton<%= element.name.split(' ').join('') %>");
+
+                    // Get the <span> element that closes the modal
+                    var spn<%= element.name.split(' ').join('') %> = document.getElementById("close-tag-<%= element.name.split(' ').join('') %>");
+
+                    // When the user clicks on the button, open the modal
+                    btn<%= element.name.split(' ').join('') %>.onclick = function() {
+                        modal<%= element.name.split(' ').join('') %>.style.display = "block";
+                    }
+
+                    // When the user clicks anywhere outside of the modal, close it
+                    window.onclick = function(event) {
+                        if (event.target == modal<%= element.name.split(' ').join('') %>) {
+                            modal<%= element.name.split(' ').join('') %>.style.display = "none";
+                        }
+                    }
+
+                    // When the user clicks on <span> (x), close the modal
+                    spn<%= element.name.split(' ').join('') %>.onclick = function() {
+                        modal<%= element.name.split(' ').join('') %>.style.display = "none";
+                    }
+                </script>
+            <% } %>
+        <% })%>
+    </div>
+
+
+    <div class="content" id="cart">
+        <div class="row justify-content-center">
+
+            <div class="col-md-4">
+                <ul class="list-unstyled m-1 w-100" id="cartList">
+                    <li class="media cartItems">
+                        <div id="cartImage"><img id="menuImg"
+                                src="https://pod.inrupt.com/admintest1/root/store/covers.jpg" class="img-fluid mr-3"
+                                style="height: 100%; height : 100%;" alt="Generic placeholder image" /></div>
+                        <div class="media-body">
+                            <h4 class="mb-3 mt-1">Covers</h4>
+                            <h6 class="mt-6 d-inline">Quantity : </h6>
+                            <i class="ml-3 fa fa-plus" id="cover-plus" onclick="updateCovers('cover-plus');" aria-hidden="true"></i>
+                            <b class="ml-2" id="covers"><%= order.covers %></b>
+                            <i class="ml-2 fa fa-minus" id="cover-minus" onclick="updateCovers('cover-minus');" aria-hidden="true"
+                                disabled="true"></i>
+                        </div>
+                    </li>
+                    <% if (order.products.length > 0) { %>
+                        <% order.products.forEach(function(element) { %>
+                            <li class="media cartItems" id="list-<%= element.name.split(' ').join('') %>">
+                                <div id="cartImage"><img id="menuImg"
+                                        src="<%= element.image %>" class="img-fluid mr-3"
+                                        style="height: 100%; height : 100%" alt="Generic placeholder image" /></div>
+                                <div class="media-body d-inline">
+                                    <h4 class="mb-3 mt-1"><%= element.name %></h4>
+                                    <h6 class="mt-4 d-inline">Quantity : </h6>
+                                    <i class="ml-3 fa fa-plus" id="<%= element.name.split(' ').join('') %>-plus" onclick="updateCart('<%= element.name.split(' ').join('') %>', '<%= element.price_per_unit %>', '-plus');" aria-hidden="true"></i>
+                                    <b class="ml-2" id="<%= element.name.split(' ').join('') %>-quantity"><%= element.quantity %></b>
+                                    <i class="ml-2 fa fa-minus" id="<%= element.name.split(' ').join('') %>-minus" onclick="updateCart('<%= element.name.split(' ').join('') %>', '<%= element.price_per_unit %>', '-minus');" aria-hidden="true"
+                                        disabled="true"></i>
+                                    <h6 class="mt-3" id="<%= element.name.split(' ').join('') %>-price">Price : <%= element.quantity %> * <%= element.price_per_unit %> = <%= element.quantity * element.price_per_unit %> CHF</h6>
+                                </div>
+                                <div id="trashEdge"> <i class="fa fa-trash" id="<%= element.name.split(' ').join('') %>-trash" onclick="updateCart('<%= element.name.split(' ').join('') %>', '<%= element.price_per_unit %>', '-trash')" aria-hidden="true"></i>
+                                </div>
+                            </li>
+                        <% })%>
+                    <% } %>
+                </ul>
+            </div>
+
+        </div>
+
+        <div id="button">
+            <div id="buttonContext">
+                <span>
+                    <form class="" action="http://localhost:8080/order" method="POST">
+                        <input type="hidden" name="cart" id="cartSending" value="" />
+                        <button class="btn btn-primary rounded-pill" type="submit" id="postOrder">Order</button>
+                    </form>
+                </span>
+                <span>
+                    <form class="" action="http://localhost:8080/bill" method="POST">
+                        <input type="hidden" name="bill" id="billSending" value="" />
+                        <button class="btn btn-primary rounded-pill" type="submit" id="billButton">Get Bill</button>
+                    </form>
+                </span>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="fixed-bottom-bar fixed-bottom border-bottom">
+        <div class="buttonMarks" id="menuSwitch">
+            <span> <a href="#menu" onclick="showAndHide('menu', 'cart');" >
+                    <div class="btn">Menù</div>
+                </a>
+            </span>
+        </div>
+        <div class="buttonMarks">
+            <span> <a href="#cart" onclick="showAndHide('cart', 'menu');">
+                    <div class="btn">Cart</div>
+                </a>
+            </span>
+        </div>
+    </div>
+
+<script>
+
+    String.prototype.hashCode = function() {
+    var hash = 0, i, chr;
+    if (this.length === 0) return hash;
+    for (i = 0; i < this.length; i++) {
+        chr   = this.charCodeAt(i);
+        hash  = ((hash << 5) - hash) + chr;
+        hash |= 0; // Convert to 32bit integer
+    }
+    return hash;
+    };
+
+    function showAndHide(show, hide){
+        document.getElementById(show).style.display = 'block';
+        document.getElementById(hide).style.display = 'none';
+    }
+
+    function updatePrice(y, z) {
+        var x = document.getElementById("mySelect" + y).value;
+        var product = x * z;
+        document.getElementById("price" + y).innerHTML = product + " CHF";
+    }
+
+    function addToCart(elem) {
+
+        elem = JSON.parse(elem);
+        //order = JSON.parse(order);
+
+        var nameUnSpaced = elem.name.split(' ').join('');
+
+        var x = document.getElementById("mySelect" + nameUnSpaced).value;
+        x = parseInt(x);
+        var amount = x * elem.cost_per_unit;
+
+        let index = changedOrder.products.findIndex(element => {
+            if (element.name.split(' ').join('') === nameUnSpaced) {
+                return true;
+            }
+        });
+
+        if (index != -1) {
+            changedOrder.total -= changedOrder.products[index]["amount"];
+            changedOrder.products[index]["quantity"] = x;
+            changedOrder.products[index]["amount"] = amount;
+            changedOrder.total += amount;
+            document.getElementById(`${nameUnSpaced}-quantity`).innerHTML = x;
+            document.getElementById(`${nameUnSpaced}-price`).innerHTML = `Price : ${x} * ${elem.cost_per_unit} = ${amount} CHF`;
+        }
+        else {
+            var cartItem = {
+                name: nameUnSpaced,
+                id: elem.id,
+                image: elem.image,
+                quantity: x,
+                price_per_unit: elem.cost_per_unit,
+                amount: amount
+            };
+
+            changedOrder.products.push(cartItem);
+
+            changedOrder.total += amount;
+
+            document.getElementById("cartList").innerHTML += `
+                <li class="media cartItems" id="list-${nameUnSpaced}">
+                    <div id="cartImage"><img id="menuImg"
+                            src="${elem.image}" class="img-fluid mr-3"
+                            style="height: 100%; height : 100%" alt="Generic placeholder image" /></div>
+                    <div class="media-body d-inline">
+                        <h4 class="mb-3 mt-1">${nameUnSpaced}</h4>
+                        <h6 class="mt-4 d-inline">Quantity : </h6>
+                        <i class="ml-3 fa fa-plus" id="${nameUnSpaced}-plus" onclick="updateCart('${nameUnSpaced}', '${elem.cost_per_unit}', '-plus');" aria-hidden="true"></i>
+                        <b class="ml-2" id="${nameUnSpaced}-quantity">${x}</b>
+                        <i class="ml-2 fa fa-minus" id="${nameUnSpaced}-minus" onclick="updateCart('${nameUnSpaced}', '${elem.cost_per_unit}', '-minus');" aria-hidden="true"
+                            disabled="true"></i>
+                        <h6 class="mt-3" id="${nameUnSpaced}-price">Price : ${x} * ${elem.cost_per_unit} = ${amount} CHF</h6>
+                    </div>
+                    <div id="trashEdge"> <i class="fa fa-trash" id="${nameUnSpaced}-trash" onclick="updateCart('${nameUnSpaced}', '${elem.cost_per_unit}', '-trash')" aria-hidden="true"></i>
+                    </div>
+                </li>
+            `;
+        }
+
+        changedOrder.hash = JSON.stringify(changedOrder).hashCode();
+        
+        console.log(changedOrder);
+
+        document.getElementById("subTotal").innerHTML = `SubTot: ${changedOrder.total}`;
+        document.getElementById("cartSending").value = JSON.stringify(changedOrder);
+        document.getElementById("billSending").value = JSON.stringify(changedOrder);
+        document.getElementById("button").style.display = "block";
+    }
+
+    function updateCart(elemName, elemPPU, action) {
+
+        // elem = JSON.parse(elem);
+        //order = JSON.parse(order);
+
+        var x = document.getElementById(elemName + "-quantity").innerHTML;
+        x = parseInt(x);
+        // console.log("Actual Element value : ", x);
+
+        let changedIndex = changedOrder.products.findIndex(element => {
+            if ((element.name.split(' ').join('')) === elemName) {
+                return true;
+            }
+        });
+
+        let index = order.products.findIndex(element => {
+            if ((element.name.split(' ').join('')) === elemName) {
+                return true;
+            }
+        });
+
+        if (index != -1){
+            switch (action) {
+                case `-plus`:
+                    document.getElementById(elemName + "-minus").disabled = false;
+                    document.getElementById(elemName + "-quantity").innerHTML = x + 1;
+                    x = x + 1;
+                    break;
+                case `-minus`:
+                    if (((x - 1) - order.products[index]["quantity"]) == 0)
+                        document.getElementById(elemName + "-minus").disabled = true;
+                    else if (((x - 1) - order.products[index]["quantity"]) < 0)
+                        return;
+                    document.getElementById(elemName + "-quantity").innerHTML = x - 1;
+                    x = x - 1;
+                    break;
+                case `-trash`:
+                    document.getElementById("list-" + elemName).remove();
+                    changedOrder.products.splice(changedIndex, 1);
+                    if (changedOrder.products.length == 0)
+                        document.getElementById("button").style.display = "none";
+                    
+                    changedOrder.hash = JSON.stringify(changedOrder).hashCode();
+                    document.getElementById("cartSending").value = JSON.stringify(changedOrder);
+                    document.getElementById("billSending").value = JSON.stringify(changedOrder);
+                    return;
+                    break;
+            }
+        }
+        else{
+            switch (action) {
+                case `-plus`:
+                    document.getElementById(elemName + "-quantity").innerHTML = x + 1;
+                    x = x + 1;
+                    break;
+                case `-minus`:
+                    if ((x - 1) == 1)
+                        document.getElementById(elemName + "-minus").disabled = true;
+                    else if ((x - 1) < 1)
+                        return;
+                    document.getElementById(elemName + "-quantity").innerHTML = x - 1;
+                    x = x - 1;
+                    break;
+                case `-trash`:
+                    document.getElementById("list-" + elemName).remove();
+                    changedOrder.products.splice(changedIndex, 1);
+                    if (changedOrder.products.length == 0)
+                        document.getElementById("button").style.display = "none";
+
+                    changedOrder.hash = JSON.stringify(changedOrder).hashCode();
+                    document.getElementById("cartSending").value = JSON.stringify(changedOrder);
+                    document.getElementById("billSending").value = JSON.stringify(changedOrder);
+                    return;
+                    break;
+            }
+        }
+
+        var amount = x * elemPPU;
+        changedOrder.total -= changedOrder.products[changedIndex]["amount"];
+        changedOrder.products[changedIndex]["quantity"] = x;
+        changedOrder.products[changedIndex]["amount"] = amount;
+        changedOrder.total += amount;
+
+        document.getElementById(elemName + "-price").innerHTML = "Price :  " + x + " * " + elemPPU + " = " + amount + " CHF";
+
+        changedOrder.hash = JSON.stringify(changedOrder).hashCode();
+        console.log("Hash Order : ", changedOrder.hash);
+        console.log(changedOrder);
+
+        document.getElementById("cartSending").value = JSON.stringify(changedOrder);
+        document.getElementById("billSending").value = JSON.stringify(changedOrder);
+        document.getElementById("subTotal").innerHTML = `SubTot: ${changedOrder.total}`;
+    }
+
+    function updateCovers(action) {
+
+        var x = document.getElementById("covers").innerHTML;
+        x = parseInt(x);
+        //console.log("Actual Covers value : ", x);
+
+        switch(action) {
+        case `cover-minus`:
+            if ((x-1) == 1){
+            document.getElementById("cover-minus").disabled = true;
+            //offuscare bottone
+            }
+            else if ((x-1) < 1){
+            console.log("Cannot update"); 
+            return;
+            }
+            document.getElementById("cover-plus").disabled = false;
+            document.getElementById("covers").innerHTML= x-1;
+            x=x-1;
+            break;
+        case `cover-plus`:
+            if ((x+1) < 5) {
+            document.getElementById("cover-minus").disabled = false;
+            document.getElementById("covers").innerHTML = x+1;
+            x=x+1;
+            break;
+            }
+            else {
+            document.getElementById("cover-plus").disabled = true;
+            console.log("Max Number of covers reached"); 
+            return;
+            }
+        }
+
+        changedOrder.covers = x;
+        changedOrder.hash = JSON.stringify(changedOrder).hashCode();
+        document.getElementById("cartSending").value = JSON.stringify(changedOrder);
+        document.getElementById("billSending").value = JSON.stringify(changedOrder);
+        //console.log("Now Covers are : ", changedOrder.covers);
+
+        //document.getElementById("coversPrice").innerHTML = "Price :  " + x + " * 2 = " + (x*2) + " CHF";
+    }
+
+    var order = <%- JSON.stringify(order) %>;
+    if (order.products.length > 0) {
+        document.getElementById("button").style.display = "block";
+        document.getElementById("cartSending").value = JSON.stringify(order);
+        document.getElementById("billSending").value = JSON.stringify(order);
+    }
+    var changedOrder = <%- JSON.stringify(order) %>;
+
+</script>
+
+<!-- <script src="/js/script.js"></script> -->
+</body>
+
+</html>
