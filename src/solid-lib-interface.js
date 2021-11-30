@@ -539,13 +539,13 @@ async function uploadJSON(data, url, fileName, session) {
 
     await uploadFileFromPath('./utils/temp.json', "application/json", url, fileName, session);
 
-    //delete the temp file
-    fs.unlinkSync('./utils/temp.json', (err) => {
-      if (err) {
-        throw err;
-      }
-      console.log("Temp File is deleted.");
-    });
+    // //delete the temp file
+    // fs.unlinkSync('./utils/temp.json', (err) => {
+    //   if (err) {
+    //     throw err;
+    //   }
+    //   console.log("Temp File is deleted.");
+    // });
 
     // /**
     //  * to write a file without container (pre-existence) constraints

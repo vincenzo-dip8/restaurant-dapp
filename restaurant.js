@@ -41,23 +41,23 @@ const home = localAddress + `${port}/`;
 //const erpPassword = "";
 
 const adminToken = {
-  "refreshToken" : "q4vL64d0MgZWdlcgQ0rwMBpYHHP4nnjm",
-  "clientId"     : "s9QD8gX4grpz7guEad0SHdMO4Kv4hDEz",
-  "clientSecret" : "bP6AAuVh3kYnXyk8CjmX1u2xYa7az92D",
+  "refreshToken" : "WNEOnTxW0UpuPXgO25Us2xGUKqgBmokz",
+  "clientId"     : "J7yYT5Zy0BrgRoB2nUFByThWjnCiOGCB",
+  "clientSecret" : "n680qMxxyi9KeOd9Shb4Z9CRzqZgOvqm",
   provider : "https://broker.pod.inrupt.com"
 };
 
 const CEOToken = {
-  "refreshToken" : "45af8cf3f37a60bd966a4e41dcf7f564",
-  "clientId"     : "a26020edadac1a10380492ece2e66556",
-  "clientSecret" : "bdd6ebb4dcee2dd537ce0f156ca03215",
+  "refreshToken" : "d1e230789ac7694329c5b398d461b3a9",
+  "clientId"     : "b3626d0c0af749faab64f93625b21af3",
+  "clientSecret" : "8f12bdd5d35c5321f66e7ac5102b4acb",
   provider : "https://solidcommunity.net"
 };
 
 const restaurantToken = {
-  "refreshToken" : "7290318860c5fbbc80d70f033477760a",
-  "clientId"     : "3c5b82e97c089517611a5f35358a892c",
-  "clientSecret" : "4980c1e5ba25996814841de92b2941dd",
+  "refreshToken" : "7c11a3e26124d11e20aa15f56d32e0c7",
+  "clientId"     : "928a83fd17a46580c365b6c97d16072d",
+  "clientSecret" : "eddbbfcd3ef99fe366fa15a45107257c",
   provider : "https://solidcommunity.net"
 };
 
@@ -71,8 +71,8 @@ program
       if (options.initialize){
         console.log("Hi, I'm inizializing the Solid context");
         // execute initialize commands
-        // initialize(adminToken);
-        initialize(CEOToken);
+        initialize(adminToken);
+        // initialize(CEOToken);
       }
     });
 

@@ -74,7 +74,7 @@
         if (window.ethereum) {
             window.web3 = new Web3(ethereum);
             // try {       
-            //     accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+            //     var accounts = await ethereum.request({ method: 'eth_requestAccounts' });
             //     await ethereum.request({
             //         method: 'eth_sendTransaction',
             //         params: [
@@ -97,8 +97,8 @@
             // } catch (err) {
             //     console.log('User denied account access', err);
             // }
-            accounts = await ethereum.request({ method: 'eth_requestAccounts' });
-            const instanceContract = new web3.eth.Contract([
+            var accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+            const mycontract = new web3.eth.contract([
                                                     {
                                                         "inputs": [],
                                                         "stateMutability": "nonpayable",
@@ -145,19 +145,20 @@
                                                         "stateMutability": "payable",
                                                         "type": "receive"
                                                     }
-                                                ], "0x73C892ADb916e0F5A09f1DEBf9495AF021bfBdee");
+                                                ]);
+            var instanceContract = mycontract.at("0x73C892ADb916e0F5A09f1DEBf9495AF021bfBdee");
             console.log("instanceContract :", instanceContract);
             instanceContract.methods
-            .transfer("<%= bill.restaurantWallet %>", wei)
-            .send({ from: accounts[0], value: wei.toString(16) }, function (err, res) {
-                if (err) {
-                    console.log("An error occured", err)
-                    return
-                }
-                console.log('Payment successful', res);
-                bill.blockchain_transaction_id = res;
-                document.getElementById("paymentSending").value = JSON.stringify(bill);
-            })
+                .forwardPayment(parseInt(ethValue), bill.order.hash)
+                .call({ from: accounts[0], value: wei.toString(16) }, function (err, res) {
+                    if (err) {
+                        console.log("An error occured", err)
+                        return
+                    }
+                    console.log('Payment successful', res);
+                    bill.blockchain_transaction_id = res;
+                    document.getElementById("paymentSending").value = JSON.stringify(bill);
+                })
         } else if (window.web3) {
             window.web3 = new Web3(web3.currentProvider);
             web3.eth.sendTransaction({
