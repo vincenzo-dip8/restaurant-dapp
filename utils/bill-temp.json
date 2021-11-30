@@ -11,6 +11,7 @@
   "payed": false,
   "pay_mode" : "blockchain transaction",
   "restaurantWallet": "0x684F22798FEf8dDcaCB8278447703787293cEe07",
+  "addressSmartContract": "0x73C892ADb916e0F5A09f1DEBf9495AF021bfBdee",
   "blockchain_type": "Ethereum 2.0",
   "blockchain_transaction_id": "after payed"
 }
