@@ -73,31 +73,44 @@
 
         if (window.ethereum) {
             window.web3 = new Web3(ethereum);
-            try {       
-                accounts = await ethereum.request({ method: 'eth_requestAccounts' });
-                await ethereum.request({
-                    method: 'eth_sendTransaction',
-                    params: [
-                        {
-                        from: accounts[0],
-                        to: '<%= bill.restaurantWallet %>',
-                        value: wei.toString(16),
-                        // data: web3.toHex(bill.order.hash)
-                        },
-                    ],
-                })
-                .then((txHash) => {
-                    console.log('Payment successful', txHash);
-                    bill.blockchain_transaction_id = txHash;
-                    document.getElementById("paymentSending").value = JSON.stringify(bill);
-                })
-                .catch((error) => {
-                   console.log(error);
-                });
-
-            } catch (err) {
-                console.log('User denied account access', err);
-            }
+            // try {       
+            //     accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+            //     await ethereum.request({
+            //         method: 'eth_sendTransaction',
+            //         params: [
+            //             {
+            //             from: accounts[0],
+            //             to: '<%= bill.restaurantWallet %>',
+            //             value: wei.toString(16),
+            //             // data: web3.toHex(bill.order.hash)
+            //             },
+            //         ],
+            //     })
+            //     .then((txHash) => {
+            //         console.log('Payment successful', txHash);
+            //         bill.blockchain_transaction_id = txHash;
+            //         document.getElementById("paymentSending").value = JSON.stringify(bill);
+            //     })
+            //     .catch((error) => {
+            //        console.log(error);
+            //     });
+            // } catch (err) {
+            //     console.log('User denied account access', err);
+            // }
+            accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+            const instanceContract = new web3.eth.Contract("ERC20TransferABI", "DAI_ADDRESS");
+            console.log("instanceContract :", instanceContract);
+            instanceContract.methods
+            .transfer("<%= bill.restaurantWallet %>", wei)
+            .send({ from: accounts[0] }, function (err, res) {
+                if (err) {
+                console.log("An error occured", err)
+                return
+                }
+                console.log('Payment successful', res);
+                bill.blockchain_transaction_id = res;
+                document.getElementById("paymentSending").value = JSON.stringify(bill);
+            })
         } else if (window.web3) {
             window.web3 = new Web3(web3.currentProvider);
             web3.eth.sendTransaction({
