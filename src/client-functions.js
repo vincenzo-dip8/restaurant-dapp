@@ -219,7 +219,75 @@ async function checkPayment(hashOrder, transactionID){
         // Instantiate web3 with HttpProvider
         var web3 = new Web3(`https://kovan.infura.io/v3/09025260fc864cd09d057f68852e45ea`);        
 
+        //################################ Contract-Event Case #################################à
+        var ERC20ABI = [
+            {
+                "inputs": [],
+                "stateMutability": "nonpayable",
+                "type": "constructor"
+            },
+            {
+                "inputs": [
+                    {
+                        "internalType": "uint256",
+                        "name": "amount",
+                        "type": "uint256"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "_orderHash",
+                        "type": "string"
+                    }
+                ],
+                "name": "forwardPayment",
+                "outputs": [],
+                "stateMutability": "payable",
+                "type": "function"
+            },
+            {
+                "inputs": [
+                    {
+                        "internalType": "string",
+                        "name": "_orderHash",
+                        "type": "string"
+                    }
+                ],
+                "name": "getData",
+                "outputs": [
+                    {
+                        "internalType": "string",
+                        "name": "hash",
+                        "type": "string"
+                    }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "stateMutability": "payable",
+                "type": "receive"
+            }
+        ];
+        var instanceContract = new web3.eth.Contract(ERC20ABI, "0x89B8ddb97676050Fef863121Efa923C29d8924ae");
+
+        await instanceContract.methods
+            .getData(hashOrder)
+            .call({ from: "0x684F22798FEf8dDcaCB8278447703787293cEe07" }, function (err, res) {
+                if (err) {
+                    console.log("An error occured", err)
+                    return
+                }
+                console.log('RES: ', res);
+                if(res == hashOrder)
+                    return true;
+                else
+                    console.log("The order seems to be not inserted as payed!");
+            });
+        
+        return false;
+
         //################################ Transaction Case #################################à
+        /**
         const trx = await web3.eth.getTransaction(transactionID);
 
         console.log("TRX : ", trx.input);
@@ -251,6 +319,7 @@ async function checkPayment(hashOrder, transactionID){
         };
 
         return false;  
+        */    
     }
     catch (error) {
         console.log(error)

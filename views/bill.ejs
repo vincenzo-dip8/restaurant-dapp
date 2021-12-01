@@ -125,19 +125,6 @@
                     "type": "function"
                 },
                 {
-                    "inputs": [],
-                    "name": "getClap",
-                    "outputs": [
-                        {
-                            "internalType": "string",
-                            "name": "_clap",
-                            "type": "string"
-                        }
-                    ],
-                    "stateMutability": "view",
-                    "type": "function"
-                },
-                {
                     "inputs": [
                         {
                             "internalType": "string",
@@ -149,7 +136,7 @@
                     "outputs": [
                         {
                             "internalType": "string",
-                            "name": "",
+                            "name": "hash",
                             "type": "string"
                         }
                     ],
@@ -161,27 +148,36 @@
                     "type": "receive"
                 }
             ];
-            var instanceContract = new web3.eth.Contract(ERC20ABI, "0x822Ec09C08EbF8cE22665fD42099Ec0fC45206fd");
-            instanceContract.methods
+            var instanceContract = new web3.eth.Contract(ERC20ABI, "0x89B8ddb97676050Fef863121Efa923C29d8924ae");
+            await instanceContract.methods
                 .forwardPayment(wei, bill.order.hash)
-                // .call({ from: accounts[0], value: wei }, function (err, res) {
-                //     if (err) {
-                //         console.log("An error occured", err)
-                //         return
-                //     }
-                //     console.log('Payment successful', res);
-                //     bill.blockchain_transaction_id = res;
-                //     document.getElementById("paymentSending").value = JSON.stringify(bill);
-                // })
+                // // .call({ from: accounts[0], value: wei }, function (err, res) {
+                // //     if (err) {
+                // //         console.log("An error occured", err)
+                // //         return
+                // //     }
+                // //     console.log('Payment successful', res);
+                // //     bill.blockchain_transaction_id = res;
+                // //     document.getElementById("paymentSending").value = JSON.stringify(bill);
+                // // })
                 .send({ from: accounts[0], value: wei }, function (err, res) {
                     if (err) {
                         console.log("An error occured", err)
                         return
                     }
                     console.log('Payment successful', res);
+                    console.log(bill.order.hash);
                     bill.blockchain_transaction_id = res;
                     document.getElementById("paymentSending").value = JSON.stringify(bill);
                 })
+                // .getData("test")
+                // .call({ from: accounts[0] }, function (err, res) {
+                //     if (err) {
+                //         console.log("An error occured", err)
+                //         return
+                //     }
+                //     console.log(res);
+                // })
         } else if (window.web3) {
             window.web3 = new Web3(web3.currentProvider);
             web3.eth.sendTransaction({

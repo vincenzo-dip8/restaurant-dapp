@@ -4,10 +4,10 @@ pragma solidity >=0.4.0 <0.9.0;
 contract RestaurantContract{
     address payable _owner; 
     mapping(string => string) hashTable;
-    string clap = "3";
 
     constructor() {
         _owner = payable(msg.sender);
+        hashTable["test"] = "test";
     }
 
     receive () external payable{}
@@ -24,13 +24,9 @@ contract RestaurantContract{
         hashTable[_orderHash]= _orderHash;
     }
 
-    function getData(string memory _orderHash) view public onlyOwner returns(string memory) {
+    function getData(string memory _orderHash) view public onlyOwner returns(string memory hash) {
         // require(msg.sender == _owner);
         return hashTable[_orderHash];
-    }
-
-    function getClap() view public returns(string memory _clap){
-        return clap;
     }
     
 }
