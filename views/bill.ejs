@@ -15,7 +15,9 @@
         <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>  
-        <script src="https://unpkg.com/@metamask/legacy-web3@latest/dist/metamask.web3.min.js"></script>
+        <!-- <script src="https://unpkg.com/@metamask/legacy-web3@latest/dist/metamask.web3.min.js"></script>
+         -->
+         <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.6.1/web3.min.js" integrity="sha512-5erpERW8MxcHDF7Xea9eBQPiRtxbse70pFcaHJuOhdEBQeAxGQjUwgJbuBDWve+xP/u5IoJbKjyJk50qCnMD7A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>         
         <link rel="stylesheet" href="/css/style.css" />
     </head>
 
@@ -64,7 +66,7 @@
 
     async function payment(){
 
-        let ethValue = parseInt(bill.order.total) / 3919;
+        let ethValue = bill.order.total / 3919;
         let wei = parseInt(ethValue * 1000000000000000000);
 
         document.getElementById("transactionButton").style.display = "none"; 
@@ -98,59 +100,80 @@
             //     console.log('User denied account access', err);
             // }
             var accounts = await ethereum.request({ method: 'eth_requestAccounts' });
-            const mycontract = new web3.eth.contract([
-                                                    {
-                                                        "inputs": [],
-                                                        "stateMutability": "nonpayable",
-                                                        "type": "constructor"
-                                                    },
-                                                    {
-                                                        "inputs": [
-                                                            {
-                                                                "internalType": "uint256",
-                                                                "name": "amount",
-                                                                "type": "uint256"
-                                                            },
-                                                            {
-                                                                "internalType": "string",
-                                                                "name": "_orderHash",
-                                                                "type": "string"
-                                                            }
-                                                        ],
-                                                        "name": "forwardPayment",
-                                                        "outputs": [],
-                                                        "stateMutability": "payable",
-                                                        "type": "function"
-                                                    },
-                                                    {
-                                                        "inputs": [
-                                                            {
-                                                                "internalType": "string",
-                                                                "name": "_orderHash",
-                                                                "type": "string"
-                                                            }
-                                                        ],
-                                                        "name": "getData",
-                                                        "outputs": [
-                                                            {
-                                                                "internalType": "string",
-                                                                "name": "",
-                                                                "type": "string"
-                                                            }
-                                                        ],
-                                                        "stateMutability": "view",
-                                                        "type": "function"
-                                                    },
-                                                    {
-                                                        "stateMutability": "payable",
-                                                        "type": "receive"
-                                                    }
-                                                ]);
-            var instanceContract = mycontract.at("0x73C892ADb916e0F5A09f1DEBf9495AF021bfBdee");
-            console.log("instanceContract :", instanceContract);
+            var ERC20ABI = [
+                {
+                    "inputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "constructor"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint256",
+                            "name": "amount",
+                            "type": "uint256"
+                        },
+                        {
+                            "internalType": "string",
+                            "name": "_orderHash",
+                            "type": "string"
+                        }
+                    ],
+                    "name": "forwardPayment",
+                    "outputs": [],
+                    "stateMutability": "payable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [],
+                    "name": "getClap",
+                    "outputs": [
+                        {
+                            "internalType": "string",
+                            "name": "_clap",
+                            "type": "string"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "string",
+                            "name": "_orderHash",
+                            "type": "string"
+                        }
+                    ],
+                    "name": "getData",
+                    "outputs": [
+                        {
+                            "internalType": "string",
+                            "name": "",
+                            "type": "string"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "stateMutability": "payable",
+                    "type": "receive"
+                }
+            ];
+            var instanceContract = new web3.eth.Contract(ERC20ABI, "0x822Ec09C08EbF8cE22665fD42099Ec0fC45206fd");
             instanceContract.methods
-                .forwardPayment(parseInt(ethValue), bill.order.hash)
-                .call({ from: accounts[0], value: wei.toString(16) }, function (err, res) {
+                .forwardPayment(wei, bill.order.hash)
+                // .call({ from: accounts[0], value: wei }, function (err, res) {
+                //     if (err) {
+                //         console.log("An error occured", err)
+                //         return
+                //     }
+                //     console.log('Payment successful', res);
+                //     bill.blockchain_transaction_id = res;
+                //     document.getElementById("paymentSending").value = JSON.stringify(bill);
+                // })
+                .send({ from: accounts[0], value: wei }, function (err, res) {
                     if (err) {
                         console.log("An error occured", err)
                         return

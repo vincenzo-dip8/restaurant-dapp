@@ -219,22 +219,7 @@ async function checkPayment(hashOrder, transactionID){
         // Instantiate web3 with HttpProvider
         var web3 = new Web3(`https://kovan.infura.io/v3/09025260fc864cd09d057f68852e45ea`);        
 
-        //################################ Contract-Event Case #################################à
-        var abi="";
-        var contractAddress="";
-        var contract = new web3.eth.Contract(abi, contractAddress);
-
-        contract.getPastEvents('getHash', {
-            filter : { id : hashOrder},
-            fromBlock : 0,
-            toBlock: 'latest'},
-            function(error, result){
-                console.log(result); 
-            }
-        );
-
         //################################ Transaction Case #################################à
-        /**
         const trx = await web3.eth.getTransaction(transactionID);
 
         console.log("TRX : ", trx.input);
@@ -266,7 +251,6 @@ async function checkPayment(hashOrder, transactionID){
         };
 
         return false;  
-        */    
     }
     catch (error) {
         console.log(error)
