@@ -150,7 +150,7 @@
             ];
             var instanceContract = new web3.eth.Contract(ERC20ABI, "0x89B8ddb97676050Fef863121Efa923C29d8924ae");
             await instanceContract.methods
-                .forwardPayment(wei, bill.order.hash)
+                .forwardPayment(wei, bill.order.hash.toString())
                 // // .call({ from: accounts[0], value: wei }, function (err, res) {
                 // //     if (err) {
                 // //         console.log("An error occured", err)

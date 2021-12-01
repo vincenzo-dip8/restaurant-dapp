@@ -219,7 +219,7 @@ async function checkPayment(hashOrder, transactionID){
         // Instantiate web3 with HttpProvider
         var web3 = new Web3(`https://kovan.infura.io/v3/09025260fc864cd09d057f68852e45ea`);        
 
-        //################################ Contract-Event Case #################################à
+        //################################ Contract Case #################################à
         var ERC20ABI = [
             {
                 "inputs": [],
@@ -270,15 +270,18 @@ async function checkPayment(hashOrder, transactionID){
         ];
         var instanceContract = new web3.eth.Contract(ERC20ABI, "0x89B8ddb97676050Fef863121Efa923C29d8924ae");
 
+
         await instanceContract.methods
-            .getData(hashOrder)
+            .getData(hashOrder.toString())
             .call({ from: "0x684F22798FEf8dDcaCB8278447703787293cEe07" }, function (err, res) {
                 if (err) {
                     console.log("An error occured", err)
                     return
                 }
-                console.log('RES: ', res);
-                if(res == hashOrder)
+                console.log("RES : ", res.toString());
+                console.log("HASH : ", hashOrder.toString());
+                console.log("?? : s", res.toString() == hashOrder.toString());
+                if ((res.toString() == hashOrder.toString()) == true)
                     return true;
                 else
                     console.log("The order seems to be not inserted as payed!");
@@ -324,8 +327,6 @@ async function checkPayment(hashOrder, transactionID){
     catch (error) {
         console.log(error)
     };
-    
-        //verifico hashOrder nel body della transazione
 }
 
 function makePreBillPDF(bill){
