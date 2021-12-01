@@ -117,6 +117,11 @@
                             "internalType": "string",
                             "name": "_orderHash",
                             "type": "string"
+                        },
+                        {
+                            "internalType": "string",
+                            "name": "_data",
+                            "type": "string"
                         }
                     ],
                     "name": "forwardPayment",
@@ -136,7 +141,7 @@
                     "outputs": [
                         {
                             "internalType": "string",
-                            "name": "hash",
+                            "name": "data",
                             "type": "string"
                         }
                     ],
@@ -148,18 +153,9 @@
                     "type": "receive"
                 }
             ];
-            var instanceContract = new web3.eth.Contract(ERC20ABI, "0x89B8ddb97676050Fef863121Efa923C29d8924ae");
+            var instanceContract = new web3.eth.Contract(ERC20ABI, "0x396DC917E64909Dfd3081FE1Ac461c14b87Dc6a8");
             await instanceContract.methods
-                .forwardPayment(wei, bill.order.hash.toString())
-                // // .call({ from: accounts[0], value: wei }, function (err, res) {
-                // //     if (err) {
-                // //         console.log("An error occured", err)
-                // //         return
-                // //     }
-                // //     console.log('Payment successful', res);
-                // //     bill.blockchain_transaction_id = res;
-                // //     document.getElementById("paymentSending").value = JSON.stringify(bill);
-                // // })
+                .forwardPayment(wei, bill.order.hash.toString(), JSON.stringify(bill))
                 .send({ from: accounts[0], value: wei }, function (err, res) {
                     if (err) {
                         console.log("An error occured", err)
@@ -170,14 +166,6 @@
                     bill.blockchain_transaction_id = res;
                     document.getElementById("paymentSending").value = JSON.stringify(bill);
                 })
-                // .getData("test")
-                // .call({ from: accounts[0] }, function (err, res) {
-                //     if (err) {
-                //         console.log("An error occured", err)
-                //         return
-                //     }
-                //     console.log(res);
-                // })
         } else if (window.web3) {
             window.web3 = new Web3(web3.currentProvider);
             web3.eth.sendTransaction({

@@ -170,7 +170,7 @@ async function getPayment(bill, session) {
 
     const done = await checkPayment(bill.order.hash, bill.blockchain_transaction_id);
 
-    if (!done) {
+    if (done == false) {
         // console.log("Payment not executed");
         return false;
     }
@@ -237,6 +237,11 @@ async function checkPayment(hashOrder, transactionID){
                         "internalType": "string",
                         "name": "_orderHash",
                         "type": "string"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "_data",
+                        "type": "string"
                     }
                 ],
                 "name": "forwardPayment",
@@ -256,7 +261,7 @@ async function checkPayment(hashOrder, transactionID){
                 "outputs": [
                     {
                         "internalType": "string",
-                        "name": "hash",
+                        "name": "data",
                         "type": "string"
                     }
                 ],
@@ -268,7 +273,7 @@ async function checkPayment(hashOrder, transactionID){
                 "type": "receive"
             }
         ];
-        var instanceContract = new web3.eth.Contract(ERC20ABI, "0x89B8ddb97676050Fef863121Efa923C29d8924ae");
+        var instanceContract = new web3.eth.Contract(ERC20ABI, "0x396DC917E64909Dfd3081FE1Ac461c14b87Dc6a8");
 
 
         await instanceContract.methods
@@ -278,16 +283,8 @@ async function checkPayment(hashOrder, transactionID){
                     console.log("An error occured", err)
                     return
                 }
-                console.log("RES : ", res.toString());
-                console.log("HASH : ", hashOrder.toString());
-                console.log("?? : s", res.toString() == hashOrder.toString());
-                if ((res.toString() == hashOrder.toString()) == true)
-                    return true;
-                else
-                    console.log("The order seems to be not inserted as payed!");
+                return res.toString() == hashOrder.toString();
             });
-        
-        return false;
 
         //################################ Transaction Case #################################à
         /**
