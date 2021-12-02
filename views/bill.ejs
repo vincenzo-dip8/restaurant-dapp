@@ -51,7 +51,7 @@
                     <button class="btn btn-primary rounded-pill" type="submit" id="transactionButton" onclick="payment()">Make Transaction</button>
                     <!-- <div class="d-flex justify-content-center" id="charging"><div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></div> -->
                     <div class="d-flex justify-content-center" id="charging"></div>
-                    <form id="paymentGateway" action="http://localhost:8080/payment" method="POST">
+                    <form id="paymentGateway" action="/payment" method="POST">
                         <input type="hidden" name="bill" id="paymentSending" value="" />
                         <button class="hidden btn btn-primary rounded-pill" type="submit" id="paymentButton" onclick="check()">Check Payment</button>
                     </form>
