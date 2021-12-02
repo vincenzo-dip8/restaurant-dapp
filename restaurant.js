@@ -41,17 +41,10 @@ const home = localAddress + `${port}/`;
 //const erpPassword = "";
 
 const adminToken = {
-  "refreshToken" : "WNEOnTxW0UpuPXgO25Us2xGUKqgBmokz",
-  "clientId"     : "J7yYT5Zy0BrgRoB2nUFByThWjnCiOGCB",
-  "clientSecret" : "n680qMxxyi9KeOd9Shb4Z9CRzqZgOvqm",
+  "refreshToken" : "fHPkcSgVOfeAeP10ONPOb10Mn0Crzm0I",
+  "clientId"     : "ks2Qvv9XzjckN5vnHFXkcecoLOl3Z3gO",
+  "clientSecret" : "bUgYURuqaojYuLd5X12PxgaLIOdbYUt7",
   provider : "https://broker.pod.inrupt.com"
-};
-
-const CEOToken = {
-  "refreshToken" : "d1e230789ac7694329c5b398d461b3a9",
-  "clientId"     : "b3626d0c0af749faab64f93625b21af3",
-  "clientSecret" : "8f12bdd5d35c5321f66e7ac5102b4acb",
-  provider : "https://solidcommunity.net"
 };
 
 const restaurantToken = {
@@ -72,7 +65,6 @@ program
         console.log("Hi, I'm inizializing the Solid context");
         // execute initialize commands
         initialize(adminToken);
-        // initialize(CEOToken);
       }
     });
 

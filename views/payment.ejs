@@ -31,7 +31,6 @@
     </div>
 
     <div class="content" id="menu">
-        <a class="hidden" href="<%= billURL %>" download ></a>
         <script>
             document.getElementById("menu").style.textAlign = "center";
             document.getElementById("tableNumberFixedBar").style.display = "block";
@@ -46,7 +45,9 @@
             <div id="buttonContext">
                 <span>
                     <form class="" action="http://localhost:8080/end" method="GET">
-                        <button class="btn btn-primary rounded-pill" type="submit" id="homeButton">Home</button>
+                        <a href="<%= billURL %>" download="bill.pdf">
+                            <button class="btn btn-primary rounded-pill" type="submit" id="homeButton">Download Bill & Check at the entrance</button>
+                        </a>                        
                     </form>
                 </span>
             </div>

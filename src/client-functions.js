@@ -274,8 +274,6 @@ async function checkPayment(hashOrder, transactionID){
             }
         ];
         var instanceContract = new web3.eth.Contract(ERC20ABI, "0x396DC917E64909Dfd3081FE1Ac461c14b87Dc6a8");
-
-
         await instanceContract.methods
             .getData(hashOrder.toString())
             .call({ from: "0x684F22798FEf8dDcaCB8278447703787293cEe07" }, function (err, res) {
@@ -283,7 +281,8 @@ async function checkPayment(hashOrder, transactionID){
                     console.log("An error occured", err)
                     return
                 }
-                return res.toString() == hashOrder.toString();
+                // return JSON.parse(res).order.hash.toString() == hashOrder.toString();
+                return res.toString() != "";
             });
 
         //################################ Transaction Case #################################à
