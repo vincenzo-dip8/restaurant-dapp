@@ -99,73 +99,78 @@
             // } catch (err) {
             //     console.log('User denied account access', err);
             // }
-            var accounts = await ethereum.request({ method: 'eth_requestAccounts' });
-            var ERC20ABI = [
-                {
-                    "inputs": [],
-                    "stateMutability": "nonpayable",
-                    "type": "constructor"
-                },
-                {
-                    "inputs": [
-                        {
-                            "internalType": "uint256",
-                            "name": "amount",
-                            "type": "uint256"
-                        },
-                        {
-                            "internalType": "string",
-                            "name": "_orderHash",
-                            "type": "string"
-                        },
-                        {
-                            "internalType": "string",
-                            "name": "_data",
-                            "type": "string"
-                        }
-                    ],
-                    "name": "forwardPayment",
-                    "outputs": [],
-                    "stateMutability": "payable",
-                    "type": "function"
-                },
-                {
-                    "inputs": [
-                        {
-                            "internalType": "string",
-                            "name": "_orderHash",
-                            "type": "string"
-                        }
-                    ],
-                    "name": "getData",
-                    "outputs": [
-                        {
-                            "internalType": "string",
-                            "name": "data",
-                            "type": "string"
-                        }
-                    ],
-                    "stateMutability": "view",
-                    "type": "function"
-                },
-                {
-                    "stateMutability": "payable",
-                    "type": "receive"
-                }
-            ];
-            var instanceContract = new web3.eth.Contract(ERC20ABI, "0x396DC917E64909Dfd3081FE1Ac461c14b87Dc6a8");
-            await instanceContract.methods
-                .forwardPayment(wei, bill.order.hash.toString(), bill.src.toString())
-                .send({ from: accounts[0], value: wei }, function (err, res) {
-                    if (err) {
-                        console.log("An error occured", err)
-                        return
+            try {
+                await ethereum.enable();
+                var accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+                var ERC20ABI = [
+                    {
+                        "inputs": [],
+                        "stateMutability": "nonpayable",
+                        "type": "constructor"
+                    },
+                    {
+                        "inputs": [
+                            {
+                                "internalType": "uint256",
+                                "name": "amount",
+                                "type": "uint256"
+                            },
+                            {
+                                "internalType": "string",
+                                "name": "_orderHash",
+                                "type": "string"
+                            },
+                            {
+                                "internalType": "string",
+                                "name": "_data",
+                                "type": "string"
+                            }
+                        ],
+                        "name": "forwardPayment",
+                        "outputs": [],
+                        "stateMutability": "payable",
+                        "type": "function"
+                    },
+                    {
+                        "inputs": [
+                            {
+                                "internalType": "string",
+                                "name": "_orderHash",
+                                "type": "string"
+                            }
+                        ],
+                        "name": "getData",
+                        "outputs": [
+                            {
+                                "internalType": "string",
+                                "name": "data",
+                                "type": "string"
+                            }
+                        ],
+                        "stateMutability": "view",
+                        "type": "function"
+                    },
+                    {
+                        "stateMutability": "payable",
+                        "type": "receive"
                     }
-                    console.log('Payment successful', res);
-                    console.log(bill.order.hash);
-                    bill.blockchain_transaction_id = res;
-                    document.getElementById("paymentSending").value = JSON.stringify(bill);
-                })
+                ];
+                var instanceContract = new web3.eth.Contract(ERC20ABI, "0x396DC917E64909Dfd3081FE1Ac461c14b87Dc6a8");
+                await instanceContract.methods
+                    .forwardPayment(wei, bill.order.hash.toString(), bill.src.toString())
+                    .send({ from: accounts[0], value: wei }, function (err, res) {
+                        if (err) {
+                            console.log("An error occured", err)
+                            return
+                        }
+                        console.log('Payment successful', res);
+                        console.log(bill.order.hash);
+                        bill.blockchain_transaction_id = res;
+                        document.getElementById("paymentSending").value = JSON.stringify(bill);
+                    })   
+            } catch (error) {
+                console.log(error);
+            }
         } else if (window.web3) {
             window.web3 = new Web3(web3.currentProvider);
             web3.eth.sendTransaction({
